@@ -1,13 +1,8 @@
-// another "stamp" that's useless unless mounted on...
-const Pet = ({ name, animal, breed }) => {
-  // es6 destructuring
-  // create a variable name that will take on the value of the props object's name (key) value;
-  return React.createElement("div", {}, [
-    React.createElement("h1", {}, name),
-    React.createElement("h2", {}, animal),
-    React.createElement("h2", {}, breed)
-  ]);
-};
+import React from "react";
+// import ReactDOM from "react-dom"; // the more familiar syntax;
+import { render } from "react-dom"; // i want to import JUST render from ReactDOM
+// quasi-destructuring
+import Pet from "Pet";
 
 const App = () => {
   return React.createElement("div", { id: "something-important" }, [
@@ -32,7 +27,7 @@ const App = () => {
 // an App is like a stamp...it's useless without it being on something...
 // createElement...is like stamping the thing onto the DOM
 // components in react: something that returns markup;
-ReactDOM.render(
+render(
   React.createElement(App), // actually invokes the const App
   document.getElementById("root") // then mounts it onto the root div
 );
