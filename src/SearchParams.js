@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { ANIMALS } from "@frontendmasters/pet";
+import React, { useState, useEffect } from "react";
+import pet, { ANIMALS } from "@frontendmasters/pet";
 import useDropdown from "./useDropdown";
 
 const SearchParams = () => {
@@ -8,6 +8,22 @@ const SearchParams = () => {
 
   const [animal, AnimalDropdown] = useDropdown("Animal", "dog", ANIMALS);
   const [breed, BreedDropdown] = useDropdown("Breed", "", breeds);
+
+  // disconnective from when the render is happening...
+  // trigger when the render happens
+  // the new componentDidMount
+  // don't want to slow down the 1st render...
+  // don't have them wait...like breadsticks at olive garden
+  useEffect(() => {
+    // pet.breeds("dog").then(console.log, console.error); // clever promise action
+    setBreeds([]); //clear breeds;
+    setBreed("");
+
+    pet.breeds(animal).then(({ breeds }) => {
+      const breedStrings = breeds.map(({ name }) => name);
+      setBreeds(breedStrings);
+    }, console.error);
+  });
 
   return (
     <div className="search-params">
