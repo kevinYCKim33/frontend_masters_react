@@ -19,7 +19,7 @@ const SearchParams = () => {
   useEffect(() => {
     // pet.breeds("dog").then(console.log, console.error); // clever promise action
     setBreeds([]); //clear breeds;
-    setBreed("");
+    setBreed(""); // breeds dropdown defaults to All
 
     // given an animal type, it will return all its breeds
     // i.e. Animal: Dog ==> Breeds: "Corgi", "Husky", "Chihuahua"
@@ -28,7 +28,10 @@ const SearchParams = () => {
       setBreeds(breedStrings); //update breeds state with breedStrings
     }, console.error);
   }, [animal, setBreed, setBreeds]); // if any of these things change, trigger useEffect
-
+  // Holt thinks setBreed and setBreeds being in there is kinda stupid...only animal should really change here...
+  // }, []) // if you only need to have it run only once...
+  // i.e. jquery integration...or D3 integration...
+  // }) // if you want it to run every time it renders...(not the most performant...)
   return (
     <div className="search-params">
       <h1> {location} </h1>
