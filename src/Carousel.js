@@ -4,8 +4,8 @@ class Carousel extends React.Component {
   // again thanks to some weird experimental babel package
   // no need for constructor or this.state = {}
   state = {
-    photos: [],
-    active: 0
+    photos: [], // an array of multiple photos of a given pet
+    active: 0 //have the 1st photo be the default active photo
   };
 
   /*
@@ -26,11 +26,14 @@ class Carousel extends React.Component {
   static getDerivedStateFromProps({ media }) {
     let photos = ["http://placecorgi.com/600/600"]; // default image
 
+    // if there are puppy photos
+    // set the photos array to large pics of the dog only...
     if (media.length) {
       photos = media.map(({ large }) => large); // just get the large photos from sm, md, lg, full
       // photos will just an array of strings of urls
     }
-
+    // pretty clean code...
+    // basically using some parts of props to set the default state of the class component
     return { photos };
   }
 

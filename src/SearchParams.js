@@ -12,7 +12,7 @@ const SearchParams = () => {
   // returns [state, Dropdown, setState]
   const [breed, BreedDropdown, setBreed] = useDropdown("Breed", "", breeds);
   // why setBreed here but no setAnimal?
-  // to reconcile the fact that changing AnimalDropdown will change the BreedDropdown
+  // to reconcile the fact that changing AnimalDropdown will change the
   const [pets, setPets] = useState([]);
 
   // async functins always returns a promise
