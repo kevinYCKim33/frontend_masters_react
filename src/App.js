@@ -2,13 +2,28 @@ import React from "react";
 // import ReactDOM from "react-dom"; // the more familiar syntax;
 import { render } from "react-dom"; // i want to import JUST render from ReactDOM
 import SearchParams from "./SearchParams";
+import { Router, Link } from "@reach/router";
+// Reach will show the one that matches the most
+// React Router will show everything that matches
+// Reach has some cool scoring algorithm
+// "/details/:id" vs "/details/4"
+// Reach router will give priority to /details/4
+// React router will render both /:id and /4
+// Reach sounds a bit better
+
+import Details from "./Details";
 
 const App = () => {
   return (
     <React.StrictMode>
       <div>
-        <h1 id="something-important">Adopt Me!</h1>
-        <SearchParams />
+        <header>
+          <Link to="/"> Adopt Me! </Link>
+        </header>
+        <Router>
+          <SearchParams path="/" />
+          <Details path="/details/:id" />
+        </Router>
       </div>
     </React.StrictMode>
   );
