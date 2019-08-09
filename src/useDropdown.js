@@ -29,6 +29,11 @@ const useDropdown = (label, defaultState, options) => {
   );
 
   return [state, Dropdown, setState];
+  // state for AnimalDropdown: currently selected animal
+  // state for BreedDropdown: currently selected breed
+  // why setState is an optional feed...
+  // perhaps you want to change the state of a dropdown from outside of this component
+  // i.e. changing the state of BreedDropdown upon state change of Animal Dropdown
 };
 
 export default useDropdown;
