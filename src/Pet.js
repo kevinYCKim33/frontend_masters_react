@@ -27,3 +27,5 @@ export default function Pet({ name, animal, breed, media, location, id }) {
     </a>
   );
 }
+
+// when clicked on the <a>//the Reach Router hijacks it...
