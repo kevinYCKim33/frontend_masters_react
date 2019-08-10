@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 // import ReactDOM from "react-dom"; // the more familiar syntax;
 import { render } from "react-dom"; // i want to import JUST render from ReactDOM
 import SearchParams from "./SearchParams";
@@ -12,19 +12,25 @@ import { Router, Link } from "@reach/router";
 // Reach sounds a bit better
 
 import Details from "./Details";
+import ThemeContext from "./ThemeContext";
 
 const App = () => {
+  // usually const [state, setState] = useState(defaultValue)
+  const themeHook = useState("peru");
+  // themeHook // ["darkblue", f]
   return (
     <React.StrictMode>
-      <div>
-        <header>
-          <Link to="/"> Adopt Me! </Link>
-        </header>
-        <Router>
-          <SearchParams path="/" />
-          <Details path="/details/:id" />
-        </Router>
-      </div>
+      <ThemeContext.Provider value={themeHook}>
+        <div>
+          <header>
+            <Link to="/"> Adopt Me! </Link>
+          </header>
+          <Router>
+            <SearchParams path="/" />
+            <Details path="/details/:id" />
+          </Router>
+        </div>
+      </ThemeContext.Provider>
     </React.StrictMode>
   );
 };

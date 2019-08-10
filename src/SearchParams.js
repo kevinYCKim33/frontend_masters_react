@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react"; // using Hooks
+import React, { useState, useEffect, useContext } from "react"; // using Hooks
 import pet, { ANIMALS } from "@frontendmasters/pet"; // some cool fetcher from FEM
 import Results from "./Results"; // results from the search submittal
 import useDropdown from "./useDropdown"; // custom hook for our two dropdowns
+import ThemeContext from "./ThemeContext";
 
 const SearchParams = () => {
   const [location, setLocation] = useState("Seattle, WA"); // location will be updated via the setLocation action; default location is Seattle
@@ -14,6 +15,11 @@ const SearchParams = () => {
   // why setBreed here but no setAnimal?
   // to reconcile the fact that changing AnimalDropdown will change the
   const [pets, setPets] = useState([]);
+  const [theme, setTheme] = useContext(ThemeContext); // an alternative to avoiding prop drilling
+  // useContext(ThemeContext): just returns X from <ThemeContext.Provider value={X}>
+
+  // theme // "darkblue"
+  // WAS NOT PASSED ANYTHING FROM APP but was able to bypass the explicit pass down via context
 
   // async functins always returns a promise
   // superpower you get is await
@@ -76,7 +82,21 @@ const SearchParams = () => {
         </label>
         <AnimalDropdown /> {/* Essentially Dropdown with Animal spin to it */}
         <BreedDropdown /> {/* */}
-        <button>Submit</button>
+        <label htmlFor="theme">
+          Theme
+          <select
+            value={theme}
+            onChange={e => setTheme(e.target.value)}
+            onBlur={e => setTheme(e.target.value)}
+          >
+            <option value="peru">Peru </option>
+            <option value="darkblue">Dark Blue </option>
+            <option value="mediumorchid">Medium Orchid </option>
+            <option value="chartreuse">Chartreuse </option>
+          </select>
+        </label>
+        {/* can't use ColorDropdown since using someone else's hook */}
+        <button style={{ backgroundColor: theme }}>Submit</button>
       </form>
       <Results pets={pets} />
     </div>
