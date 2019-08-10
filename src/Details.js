@@ -1,5 +1,7 @@
 import React from "react";
 import pet from "@frontendmasters/pet";
+import { navigate } from "@reach/router";
+import Modal from "./Modal";
 import Carousel from "./Carousel";
 import ErrorBoundary from "./ErrorBoundary";
 import ThemeContext from "./ThemeContext";
@@ -19,7 +21,7 @@ import ThemeContext from "./ThemeContext";
 class Details extends React.Component {
   // Reactv5: Configuring Babel for Parcel
   // so much work just to get rid of constructor(props) and this.state
-  state = { loading: true }; // this will land in 2019 in JS
+  state = { loading: true, showModal: false }; // this will land in 2019 in JS
   // constructor(props) {
   //   super(props);
   //   // odd ritual you have to do
@@ -42,6 +44,7 @@ class Details extends React.Component {
       // this.setState ~ a shallow merge ~ like Object.assign(oldState, newState)
       this.setState(
         {
+          url: animal.url,
           name: animal.name,
           animal: animal.type,
           location: `${animal.contact.address.city}, ${animal.contact.address.state}`,
@@ -55,12 +58,25 @@ class Details extends React.Component {
     });
   }
 
+  toggleModal = () => this.setState({ showModal: !this.state.showModal });
+
+  // actually go straight to this external website
+  adopt = () => navigate(this.state.url); // from Reach Router could've done with redirect
+
   render() {
     if (this.state.loading) {
       return <h1>loading...</h1>;
     }
 
-    const { animal, breed, location, description, name, media } = this.state;
+    const {
+      animal,
+      breed,
+      location,
+      description,
+      name,
+      media,
+      showModal
+    } = this.state;
 
     return (
       <div className="details">
@@ -71,13 +87,25 @@ class Details extends React.Component {
             <h2> {`${animal} - ${breed} - ${location}`} </h2>
             <ThemeContext.Consumer>
               {([themeHook]) => (
-                <button style={{ backgroundColor: themeHook }}>
+                <button
+                  onClick={this.toggleModal}
+                  style={{ backgroundColor: themeHook }}
+                >
                   Adopt {name}
                 </button>
               )}
             </ThemeContext.Consumer>
 
             <p> {description} </p>
+            {showModal ? (
+              <Modal>
+                <h1> Would you like to adopt {name}?</h1>
+                <div className="buttons">
+                  <button onClick={this.adopt}> Yes </button>
+                  <button onClick={this.toggleModal}>No, I am a monster</button>
+                </div>
+              </Modal>
+            ) : null}
           </div>
         </div>
       </div>
