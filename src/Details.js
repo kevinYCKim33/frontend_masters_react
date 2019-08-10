@@ -1,6 +1,7 @@
 import React from "react";
 import pet from "@frontendmasters/pet";
 import Carousel from "./Carousel";
+import ErrorBoundary from "./ErrorBoundary";
 
 // const Details = props => {
 //   return (
@@ -28,6 +29,7 @@ class Details extends React.Component {
   // }
   // useful for AJAX
   componentDidMount() {
+    // throw new Error("lol");
     // props are immutable (read-only)
     pet.animal(this.props.id).then(({ animal }) => {
       // HAVE to do => here for this.setState to work...
@@ -75,4 +77,11 @@ class Details extends React.Component {
   }
 }
 
-export default Details;
+export default function DetailsWithErrorBoundary(props) {
+  return (
+    <ErrorBoundary>
+      <Details {...props} />
+      {/*spreads props across details  */}
+    </ErrorBoundary>
+  );
+}
