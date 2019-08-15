@@ -42,6 +42,7 @@ const Modal = ({ children }) => {
   // ReactDOM.createPortal(child, container)
   return createPortal(<div>{children}</div>, elRef.current);
   // in this div that has yet to be placed in the DOM...put in these children from <Modal>{childrenDivs}</Modal>
+  // through some "Portal", you put these div elements that belong in the App universe, in Modal component that could technically be put anywhere!
 };
 
 export default Modal;
