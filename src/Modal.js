@@ -5,7 +5,7 @@ import { createPortal } from "react-dom";
 // pop off modal, it needs to be destroyed...
 // https://reactjs.org/docs/hooks-reference.html#useref
 const Modal = ({ children }) => {
-  // childr en: all the divs inside <Modal> </Modal>
+  // children: all the divs inside <Modal> </Modal>
   const elRef = useRef(null);
   // elRef // {current: null}
   if (!elRef.current) {
@@ -35,7 +35,7 @@ const Modal = ({ children }) => {
     return () => {
       modalRoot.removeChild(elRef.current);
     };
-  }, []); // it needs to run only once! has no dependecies...
+  }, []); // , [] == it needs to run only once! has no dependecies...
 
   // 3. but then goes straight here...
   // https://reactjs.org/docs/portals.html

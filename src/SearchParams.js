@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react"; // using Hooks
+import React, { useState, useEffect, useContext } from "react"; // using Hooks (2); using Context API
 import pet, { ANIMALS } from "@frontendmasters/pet"; // some cool fetcher from FEM
 import Results from "./Results"; // results from the search submittal
 import useDropdown from "./useDropdown"; // custom hook for our two dropdowns
@@ -13,7 +13,7 @@ const SearchParams = () => {
   // returns [state, Dropdown, setState]
   const [breed, BreedDropdown, setBreed] = useDropdown("Breed", "", breeds);
   // why setBreed here but no setAnimal?
-  // to reconcile the fact that changing AnimalDropdown will change the
+  // to reconcile the fact that changing AnimalDropdown will clear out the breeds selection
   const [pets, setPets] = useState([]);
   const [theme, setTheme] = useContext(ThemeContext); // an alternative to avoiding prop drilling
   // useContext(ThemeContext): just returns X from <ThemeContext.Provider value={X}>
@@ -21,7 +21,7 @@ const SearchParams = () => {
   // theme // "darkblue"
   // WAS NOT PASSED ANYTHING FROM APP but was able to bypass the explicit pass down via context
 
-  // async functins always returns a promise
+  // async functions always returns a promise
   // superpower you get is await
   // pet.animals gives you a promise...
   // wait for it, then assign its response's animal key to animals variable
@@ -70,7 +70,7 @@ const SearchParams = () => {
           requestPets();
         }}
       >
-        {/* on submmit it will trigger requestPets an async function */}
+        {/* on submit it will trigger requestPets an async function */}
         <label htmlFor="location">
           Location
           <input
