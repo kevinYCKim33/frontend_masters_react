@@ -1,10 +1,12 @@
-import React from "react";
+import React, { lazy } from "react";
 import pet from "@frontendmasters/pet";
 import { navigate } from "@reach/router";
-import Modal from "./Modal";
 import Carousel from "./Carousel";
 import ErrorBoundary from "./ErrorBoundary";
 import ThemeContext from "./ThemeContext";
+
+// Modal not initially used...so a good candiate for lazy loading...
+const Modal = lazy(() => import("./Modal"));
 
 // const Details = props => {
 //   return (
