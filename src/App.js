@@ -37,10 +37,12 @@ const App = () => {
 // an App is like a stamp...it's useless without it being on something...
 // createElement...is like stamping the thing onto the DOM
 // components in react: something that returns markup;
-render(
-  <App />, // actually invokes the const App
-  document.getElementById("root") // then mounts it onto the root div
-);
+// render(
+//   <App />, // actually invokes the const App
+//   document.getElementById("root") // then mounts it onto the root div
+// );
+
+export default App;
 
 // React.createElement(
 //   type,

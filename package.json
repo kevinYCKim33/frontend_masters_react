@@ -4,10 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "build": "parcel build --public-url ./dist/ src/index.html",
+    "clear-build-cache": "rm -rf .cache/ dist",
     "dev": "parcel src/index.html",
     "dev:mock": "cross-env PET_MOCK=mock npm run dev",
     "format": "prettier \"src/**/*.{js,html}\" --write",
     "lint": "eslint \"src/**/*.{js,jsx}\" --quiet",
+    "start": "npm run build && babel-node server/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -30,8 +33,10 @@
     "prettier": "^1.18.2"
   },
   "dependencies": {
+    "@babel/node": "^7.5.5",
     "@frontendmasters/pet": "^1.0.3",
     "@reach/router": "^1.2.1",
+    "express": "^4.17.1",
     "react": "^16.9.0",
     "react-dom": "^16.9.0"
   },
