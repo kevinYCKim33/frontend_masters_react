@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { render } from "react-dom"; // i want to import JUST render from ReactDOM
 import SearchParams from "./SearchParams";
 import { Router, Link } from "@reach/router";
+
 // Reach will show the one that matches the most
 // React Router will show everything that matches
 // Reach has some cool scoring algorithm
@@ -12,6 +13,7 @@ import { Router, Link } from "@reach/router";
 // Reach sounds a bit better
 
 import Details from "./Details";
+
 import ThemeContext from "./ThemeContext";
 
 const App = () => {
