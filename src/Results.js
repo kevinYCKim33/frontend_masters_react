@@ -3,9 +3,9 @@ import Pet from "./Pet";
 
 const Results = ({ pets }) => {
   return (
-    <div className="search">
+    <div data-testid="search-results" className="search">
       {pets.length === 0 ? (
-        <h1> No Pets Found </h1>
+        <h1>No Pets Found</h1>
       ) : (
         pets.map(pet => (
           <Pet

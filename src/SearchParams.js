@@ -25,17 +25,30 @@ const SearchParams = () => {
   // superpower you get is await
   // pet.animals gives you a promise...
   // wait for it, then assign its response's animal key to animals variable
-  async function requestPets() {
-    // pet.animals({location, breed, type}) will fetch back a list of actual animals that belong to that particular location, breed, and type
-    const { animals } = await pet.animals({
-      location,
-      breed,
-      type: animal
-    });
 
-    setPets(animals || []); // get actual pets...i.e. Bokshil, Bokdong, Yongshim, and set that to pets state
-    // if animals are zilch... i.e. There are no Rat Terrier in SF...return an empty array
+  function requestPets() {
+    pet
+      .animals({
+        location,
+        breed,
+        type: animal
+      })
+      .then(({ animals }) => {
+        setPets(animals || []);
+      });
   }
+  // don't do async for testing purposes
+  // async function requestPets() {
+  //   // pet.animals({location, breed, type}) will fetch back a list of actual animals that belong to that particular location, breed, and type
+  //   const { animals } = await pet.animals({
+  //     location,
+  //     breed,
+  //     type: animal
+  //   });
+
+  //   setPets(animals || []); // get actual pets...i.e. Bokshil, Bokdong, Yongshim, and set that to pets state
+  //   // if animals are zilch... i.e. There are no Rat Terrier in SF...return an empty array
+  // }
   // useEffect: the new componentDidMount
   // disconnective from when the render is happening...
   // trigger when the render happens
@@ -72,7 +85,7 @@ const SearchParams = () => {
       >
         {/* on submmit it will trigger requestPets an async function */}
         <label htmlFor="location">
-          Location
+          Location????
           <input
             id="location"
             value={location}
