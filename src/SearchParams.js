@@ -1,11 +1,14 @@
-import React, { useState, useEffect, useContext } from "react"; // using Hooks
+import React, { useState, useEffect } from "react"; // using Hooks
 import pet, { ANIMALS } from "@frontendmasters/pet"; // some cool fetcher from FEM
+import { connect } from "react-redux";
 import Results from "./Results"; // results from the search submittal
 import useDropdown from "./useDropdown"; // custom hook for our two dropdowns
-import ThemeContext from "./ThemeContext";
+import changeTheme from "./actionCreators/changeTheme";
+import changeLocation from "./actionCreators/changeLocation";
+// import ThemeContext from "./ThemeContext";
 
-const SearchParams = () => {
-  const [location, setLocation] = useState("Seattle, WA"); // location will be updated via the setLocation action; default location is Seattle
+const SearchParams = props => {
+  // const [location, setLocation] = useState("Seattle, WA"); // location will be updated via the setLocation action; default location is Seattle
   const [breeds, setBreeds] = useState([]); // breeds will constantly change based on what animal type the user chose
   // breeds defaults to empty array, not quite sure why...
   const [animal, AnimalDropdown] = useDropdown("Animal", "dog", ANIMALS);
@@ -15,7 +18,7 @@ const SearchParams = () => {
   // why setBreed here but no setAnimal?
   // to reconcile the fact that changing AnimalDropdown will change the
   const [pets, setPets] = useState([]);
-  const [theme, setTheme] = useContext(ThemeContext); // an alternative to avoiding prop drilling
+  // const [theme, setTheme] = useContext(ThemeContext); // an alternative to avoiding prop drilling
   // useContext(ThemeContext): just returns X from <ThemeContext.Provider value={X}>
 
   // theme // "darkblue"
@@ -28,7 +31,7 @@ const SearchParams = () => {
   async function requestPets() {
     // pet.animals({location, breed, type}) will fetch back a list of actual animals that belong to that particular location, breed, and type
     const { animals } = await pet.animals({
-      location,
+      location: props.location,
       breed,
       type: animal
     });
@@ -63,7 +66,7 @@ const SearchParams = () => {
   // }) // if you want it to run every time it renders...(not the most performant...)
   return (
     <div className="search-params">
-      <h1> {location} </h1>
+      <h1> {props.location} </h1>
       <form
         onSubmit={e => {
           e.preventDefault();
@@ -75,9 +78,9 @@ const SearchParams = () => {
           Location
           <input
             id="location"
-            value={location}
+            value={props.location}
             placeholder="Location"
-            onChange={e => setLocation(e.target.value)}
+            onChange={e => props.updateLocation(e.target.value)}
           />
         </label>
         <AnimalDropdown /> {/* Essentially Dropdown with Animal spin to it */}
@@ -85,9 +88,9 @@ const SearchParams = () => {
         <label htmlFor="theme">
           Theme
           <select
-            value={theme}
-            onChange={e => setTheme(e.target.value)}
-            onBlur={e => setTheme(e.target.value)}
+            value={props.theme}
+            onChange={e => props.setTheme(e.target.value)}
+            onBlur={e => props.setTheme(e.target.value)}
           >
             <option value="peru">Peru </option>
             <option value="darkblue">Dark Blue </option>
@@ -96,11 +99,29 @@ const SearchParams = () => {
           </select>
         </label>
         {/* can't use ColorDropdown since using someone else's hook */}
-        <button style={{ backgroundColor: theme }}>Submit</button>
+        <button style={{ backgroundColor: props.theme }}>Submit</button>
       </form>
       <Results pets={pets} />
     </div>
   );
 };
 
-export default SearchParams;
+// pull things out of redux, and hand it to component
+
+// read data
+const mapStateToProps = ({ theme, location }) => ({
+  theme,
+  location
+});
+
+// update; send actions to redux to tell it to update itself
+const mapDispatchToProps = dispatch => ({
+  setTheme: theme => dispatch(changeTheme(theme)),
+  updateLocation: location => dispatch(changeLocation(location))
+});
+
+// connect returns a function that you'll invoke with SearchParams;
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(SearchParams);

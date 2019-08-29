@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 // import ReactDOM from "react-dom"; // the more familiar syntax;
 import { render } from "react-dom"; // i want to import JUST render from ReactDOM
 import SearchParams from "./SearchParams";
 import { Router, Link } from "@reach/router";
+import { Provider } from "react-redux";
 // Reach will show the one that matches the most
 // React Router will show everything that matches
 // Reach has some cool scoring algorithm
@@ -10,28 +11,23 @@ import { Router, Link } from "@reach/router";
 // Reach router will give priority to /details/4
 // React router will render both /:id and /4
 // Reach sounds a bit better
+import store from "./store";
 
 import Details from "./Details";
-import ThemeContext from "./ThemeContext";
 
 const App = () => {
-  // usually const [state, setState] = useState(defaultValue)
-  const themeHook = useState("peru");
-  // themeHook // ["darkblue", f]
   return (
-    <React.StrictMode>
-      <ThemeContext.Provider value={themeHook}>
-        <div>
-          <header>
-            <Link to="/"> Adopt Me! </Link>
-          </header>
-          <Router>
-            <SearchParams path="/" />
-            <Details path="/details/:id" />
-          </Router>
-        </div>
-      </ThemeContext.Provider>
-    </React.StrictMode>
+    <Provider store={store}>
+      <div>
+        <header>
+          <Link to="/"> Adopt Me! </Link>
+        </header>
+        <Router>
+          <SearchParams path="/" />
+          <Details path="/details/:id" />
+        </Router>
+      </div>
+    </Provider>
   );
 };
 // an App is like a stamp...it's useless without it being on something...
